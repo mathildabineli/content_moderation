@@ -1,7 +1,8 @@
-from .config import FLAGS, CFG
-from .train_teacher import train_teacher_step
+from .config import CFG, FLAGS
 from .inference import ClassifierService
+from .train_teacher import train_teacher_step
 from .utils import LOG
+
 
 def main():
     if FLAGS.train_teacher:
@@ -10,10 +11,13 @@ def main():
 
     if FLAGS.infer_demo:
         LOG.info("Running demo inference...")
-        service = ClassifierService(f"{CFG.out_dir}/onnx/teacher_fp32.onnx", CFG.teacher_model)
+        service = ClassifierService(
+            f"{CFG.out_dir}/onnx/teacher_fp32.onnx", CFG.teacher_model
+        )
         sample = ["This is a test message"]
         pred = service.predict(sample)
         LOG.info("Demo prediction: %s", pred)
+
 
 if __name__ == "__main__":
     main()

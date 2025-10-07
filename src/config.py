@@ -1,12 +1,15 @@
 from dataclasses import dataclass
 from pathlib import Path
+
 import torch
+
 
 @dataclass(frozen=True)
 class RunFlags:
     train_teacher: bool = True
     export_teacher_onnx: bool = True
     infer_demo: bool = True
+
 
 @dataclass(frozen=True)
 class AppConfig:
@@ -26,10 +29,18 @@ class AppConfig:
     early_stop: int = 2
 
     # Risk constraints
-    high_risk: tuple[str, ...] = ("harassment", "violence", "sexual", "exploitation", "harm", "illicit")
+    high_risk: tuple[str, ...] = (
+        "harassment",
+        "violence",
+        "sexual",
+        "exploitation",
+        "harm",
+        "illicit",
+    )
     recall_floor: float = 0.90
 
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
+
 
 CFG = AppConfig()
 FLAGS = RunFlags()
