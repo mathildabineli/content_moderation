@@ -13,7 +13,6 @@ app = FastAPI()
 @app.post("/train_teacher")
 def train_teacher():
     
-
     try:
         labels, text_col = train_teacher_step()
         return {"status": "success", "labels": labels, "text_column": text_col}
@@ -28,9 +27,8 @@ def predict(input: PredictInput):
 
     try:
         service = ClassifierService(
-            model_path="artifacts/teacher/best",
-            tokenizer_path="artifacts/teacher/best",
-            thresholds_path="artifacts/teacher_thresholds.json"
+            onnx_path="artifacts/teacher/best",
+            tokenizer_name="artifacts/teacher/best"
         )
         preds = service.predict(input.texts)
         return {"predictions": preds}

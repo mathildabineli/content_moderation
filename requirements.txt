@@ -1,21 +1,21 @@
 # Deep learning & Transformers
-torch>=2.2
-transformers>=4.43
+torch
+transformers
 sentencepiece
 tokenizers
 
 # Data handling
-pandas>=2.0
-numpy>=1.24
-datasets>=2.20
+pandas
+numpy
+datasets
 
 # ML utilities
-scikit-learn>=1.4
+scikit-learn
 iterative-stratification  # pour MultilabelStratifiedShuffleSplit
 
 # Export & inference
-onnx>=1.16
-onnxruntime>=1.18
+onnx
+onnxruntime
 
 # Logging & utils
 tqdm
