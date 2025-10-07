@@ -1,3 +1,5 @@
+"""Services API for content moderation"""
+
 import json
 import os
 import time
@@ -11,7 +13,7 @@ from src.models import PredictInput
 from src.train_teacher import train_teacher_step
 from src.utils import labels_with_pred1
 
-"""Services API for content moderation"""
+
 
 app = FastAPI()
 

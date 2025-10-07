@@ -1,3 +1,5 @@
+"""Inference service for text moderation"""
+
 import numpy as np
 import onnx
 import onnxruntime as ort
@@ -6,9 +8,13 @@ from transformers import AutoTokenizer
 from .config import CFG
 
 
+
+
 class ClassifierService:
+
+    """Inference service"""
     def __init__(self, onnx_path: str, tokenizer_name: str):
-        # self.session = ort.InferenceSession(onnx_path, providers=['CUDAExecutionProvider','CPUExecutionProvider'])
+
         print("loading tokenizer")
         self.tokenizer = AutoTokenizer.from_pretrained(
             tokenizer_name, local_files_only=True
@@ -28,6 +34,8 @@ class ClassifierService:
             print(f"The model is invalid: {e}")
 
     def predict(self, texts: list[str]) -> np.ndarray:
+
+        """Label prediction"""
         print("starting loading encoder")
         enc = self.tokenizer(
             texts,
@@ -41,6 +49,5 @@ class ClassifierService:
             None,
             {"input_ids": enc["input_ids"], "attention_mask": enc["attention_mask"]},
         )
-        print("inference", outputs[0].__str__())
 
         return outputs[0]
