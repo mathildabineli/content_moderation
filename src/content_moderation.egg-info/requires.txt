@@ -1,0 +1,17 @@
+bandit>=1.8.6
+datasets>=4.1.1
+fastapi>=0.118.0
+iterative-stratification>=0.1.9
+numpy>=2.3.3
+onnx>=1.19.0
+onnxruntime>=1.23.0
+pandas>=2.3.3
+pydantic-settings>=2.11.0
+ruff>=0.14.0
+scikit-learn>=1.7.2
+sentencepiece>=0.2.1
+tokenizers>=0.22.1
+torch>=2.8.0
+tqdm>=4.67.1
+transformers>=4.57.0
+uvicorn>=0.37.0

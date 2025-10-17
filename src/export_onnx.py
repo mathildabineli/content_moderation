@@ -1,3 +1,8 @@
+"""ONNX export utility for the teacher model.
+
+Converts a fine-tuned transformer classifier into an ONNX
+format for optimized inference and deployment.
+"""
 import os
 from pathlib import Path
 
@@ -10,12 +15,21 @@ from .utils import LOG
 
 
 def export_teacher_onnx(model_dir: str, tokenizer: AutoTokenizer) -> str:
+    """Export the trained teacher model to ONNX format.
+
+    Wraps the transformer model, runs a dummy forward pass, and
+    saves the resulting graph under `artifacts/onnx/`.
+    """
     class Wrap(nn.Module):
+        """Wrapper for ONNX tracing to expose logits output."""
         def __init__(self, model):
             super().__init__()
             self.model = model.eval()
 
         def forward(self, input_ids, attention_mask):
+            """Run a forward pass through the wrapped model.
+            Returns the logits tensor used for ONNX export.
+            """
             return self.model(
                 input_ids=input_ids, attention_mask=attention_mask, return_dict=True
             )["logits"]

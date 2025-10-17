@@ -1,7 +1,9 @@
-import json
-from pathlib import Path
+"""Teacher model training pipeline for content moderation.
 
-import numpy as np
+Handles dataset preparation, model training, ONNX export,
+and threshold computation for the moderation teacher model.
+"""
+import json
 from datasets import DatasetDict
 from transformers import (
     AutoTokenizer,
@@ -20,6 +22,12 @@ from .utils import LOG, ensure_dataset_exists, set_seed
 
 
 def train_teacher_step():
+    """Train the teacher moderation model end-to-end.
+
+    Builds datasets, trains using Hugging Face Trainer,
+    exports to ONNX, and saves fitted decision thresholds.
+    """
+    
     set_seed(CFG.seed)
     ensure_dataset_exists()
 
@@ -70,6 +78,6 @@ def train_teacher_step():
     thresholds = fit_thresholds_with_floor(
         preds, dataset["validation"]["labels"], labels, floor=CFG.recall_floor
     )
-    with open(f"{CFG.out_dir}/teacher_thresholds.json", "w") as f:
+    with open(f"{CFG.out_dir}/teacher_thresholds.json", "w", encoding="utf-8") as f:
         json.dump(thresholds, f)
     LOG.info("Training completed and thresholds saved.")

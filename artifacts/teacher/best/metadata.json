@@ -1,0 +1,13 @@
+{
+  "label_cols": [
+    "exploitation",
+    "harassment",
+    "harm",
+    "illicit",
+    "informational",
+    "safe",
+    "sexual",
+    "violence"
+  ],
+  "text_col": "prompt_clean"
+}

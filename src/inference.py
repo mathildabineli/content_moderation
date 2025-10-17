@@ -1,4 +1,8 @@
-"""Inference service for text moderation"""
+"""Inference service for text moderation.
+
+Loads an exported ONNX classifier and performs batched text
+inference using a local tokenizer and ONNX Runtime session.
+"""
 
 import numpy as np
 import onnx
@@ -12,7 +16,7 @@ from .config import CFG
 
 class ClassifierService:
 
-    """Inference service"""
+    """Service for running ONNX-based text classification inference."""
     def __init__(self, onnx_path: str, tokenizer_name: str):
 
         print("loading tokenizer")
@@ -35,7 +39,10 @@ class ClassifierService:
 
     def predict(self, texts: list[str]) -> np.ndarray:
 
-        """Label prediction"""
+        """Run inference on a list of input texts.
+
+        Returns the raw logits array from the ONNX model.
+        """
         print("starting loading encoder")
         enc = self.tokenizer(
             texts,

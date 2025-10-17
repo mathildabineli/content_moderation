@@ -1,0 +1,23 @@
+Metadata-Version: 2.4
+Name: content-moderation
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: bandit>=1.8.6
+Requires-Dist: datasets>=4.1.1
+Requires-Dist: fastapi>=0.118.0
+Requires-Dist: iterative-stratification>=0.1.9
+Requires-Dist: numpy>=2.3.3
+Requires-Dist: onnx>=1.19.0
+Requires-Dist: onnxruntime>=1.23.0
+Requires-Dist: pandas>=2.3.3
+Requires-Dist: pydantic-settings>=2.11.0
+Requires-Dist: ruff>=0.14.0
+Requires-Dist: scikit-learn>=1.7.2
+Requires-Dist: sentencepiece>=0.2.1
+Requires-Dist: tokenizers>=0.22.1
+Requires-Dist: torch>=2.8.0
+Requires-Dist: tqdm>=4.67.1
+Requires-Dist: transformers>=4.57.0
+Requires-Dist: uvicorn>=0.37.0

@@ -1,3 +1,8 @@
+"""Dataset preparation utilities for content moderation.
+
+Provides helper functions to load, split, and tokenize datasets
+for multi-label text classification tasks.
+"""
 from typing import List, Tuple
 
 import numpy as np
@@ -9,6 +14,10 @@ from .config import CFG
 
 
 def resolve_text_col(df: pd.DataFrame, hint: str = "prompt_clean") -> str:
+    """Resolve the main text column in a dataframe.
+
+    Tries the hint first, then searches for likely text fields.
+    """
     if hint in df.columns:
         return hint
     for c in ("text", "content", "message", "body", "input", "user_input", "prompt"):
@@ -20,6 +29,10 @@ def resolve_text_col(df: pd.DataFrame, hint: str = "prompt_clean") -> str:
 
 
 def detect_labels(df: pd.DataFrame, exclude: list[str]) -> List[str]:
+    """Detect binary label columns in the dataset.
+
+    Excludes non-label columns and returns numeric/binary ones.
+    """
     cand = df.columns.difference(list(exclude))
     num = df[cand].select_dtypes(include=[np.number, bool]).columns
     sub = df[num].dropna()
@@ -29,6 +42,10 @@ def detect_labels(df: pd.DataFrame, exclude: list[str]) -> List[str]:
 
 
 def split_dataset() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, List[str], str]:
+    """Split dataset into train, validation, and test sets.
+
+    Uses multilabel stratified sampling for balanced splits.
+    """
     df = pd.read_csv(CFG.data_csv)
     text_col = resolve_text_col(df)
     labels = detect_labels(df, exclude=[text_col])
@@ -52,6 +69,10 @@ def split_dataset() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, List[str]
 
 
 def build_hf_dataset(tokenizer, df: pd.DataFrame, text_col: str, labels: List[str]):
+    """Convert a pandas dataframe into a HuggingFace Dataset.
+
+    Tokenizes texts and attaches multi-label targets.
+    """
     enc = tokenizer(
         df[text_col].tolist(),
         return_tensors="np",

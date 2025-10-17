@@ -1,3 +1,8 @@
+"""Threshold fitting utilities for content moderation models.
+
+Computes optimal per-label decision thresholds using precision-recall
+analysis with a configurable recall floor.
+"""
 from typing import Dict, Iterable, List, Tuple
 
 import numpy as np
@@ -31,6 +36,10 @@ def fit_thresholds_with_floor(
     floor: float = 0.90,
     high_risk: Iterable[str] | None = None,
 ) -> Dict[str, float]:
+    """Fit label-specific thresholds enforcing a recall floor.
+
+    Uses higher recall thresholds for high-risk categories.
+    """
     risky = set(CFG.high_risk if high_risk is None else high_risk)
     cols = range(len(labels))
     pairs = list(
